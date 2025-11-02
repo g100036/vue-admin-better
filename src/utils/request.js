@@ -64,11 +64,19 @@ instance.defaults.retryDelay = retryConfig.retryDelay
 // 请求拦截器
 instance.interceptors.request.use(
   (config) => {
+  // 定义请求白名单，名单内的请求不使用baseURL
+  const requestWhitelist = ['/api/getUserPointList','/api/getBuyCardsRecord','/api/addBuyCardsRecord','/api/setCardsList','/api/setSystemSetting', '/api/getUserWithdrawRecords', '/api/setUserWithdrawRecordsStatus']
+  // 检查请求URL是否在白名单中，若在则替换为完整URL
+    if (requestWhitelist.some(item => config.url.includes(item))) {
+      config.baseURL = ''
+      config.url = `https://autojl110.cc${config.url}`
+    }
     if (store.getters['user/accessToken']) {
       config.headers[tokenName] = store.getters['user/accessToken']
     }
     //这里会过滤所有为空、0、false的key，如果不需要请自行注释
     if (config.data) config.data = Vue.prototype.$baseLodash.pickBy(config.data, Vue.prototype.$baseLodash.identity)
+    // if (config.data && config.headers['Content-Type'] === 'application/json;charset=UTF-8')
     if (config.data && config.headers['Content-Type'] === 'application/x-www-form-urlencoded;charset=UTF-8')
       config.data = qs.stringify(config.data)
     if (debounce.some((item) => config.url.includes(item))) loadingInstance = Vue.prototype.$baseLoading()
@@ -114,6 +122,10 @@ instance.interceptors.response.use(
     }
   },
   (error) => {
+    if(error.response?.status === 401) {
+      localStorage.removeItem('bettert_k')
+      location.href = '/login'
+    }
     if (loadingInstance) loadingInstance.close()
 
     // 处理请求重试

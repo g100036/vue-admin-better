@@ -2,20 +2,20 @@
   <div class="table-container">
     <!-- <vab-page-header description="功能强大的数据表格组件，支持排序、分页、搜索等功能" :icon="['fas', 'table']" title="表格管理" /> -->
     <vab-query-form>
-      <!-- <vab-query-form-left-panel>
-        <el-button icon="el-icon-plus" type="primary" @click="handleAdd">添加</el-button>
-        <el-button icon="el-icon-delete" type="danger" @click="handleDelete">删除</el-button>
-      </vab-query-form-left-panel> -->
-      <vab-query-form-panel>
+      <vab-query-form-left-panel>
+        <!-- <el-button icon="el-icon-plus" type="primary" @click="handleAdd">添加</el-button> -->
+        <!-- <el-button icon="el-icon-delete" type="danger" @click="handleDelete">删除</el-button> -->
+      </vab-query-form-left-panel>
+      <vab-query-form-left-panel>
         <el-form ref="form" :inline="true" :model="queryForm" @submit.native.prevent>
           <el-form-item>
-            <el-input v-model="queryForm.title" placeholder="输入用户编号" />
+            <el-input v-model="queryForm.userfeaturecode" placeholder="输入用户ID" />
           </el-form-item>
           <el-form-item>
             <el-button icon="el-icon-search" native-type="submit" type="primary" @click="handleQuery">查询</el-button>
           </el-form-item>
         </el-form>
-      </vab-query-form-panel>
+      </vab-query-form-left-panel>
     </vab-query-form>
 
     <el-table
@@ -44,7 +44,7 @@
       <!-- <el-table-column label="点击量" prop="pageViews" show-overflow-tooltip sortable /> -->
       <el-table-column label="状态" show-overflow-tooltip>
         <template #default="{ row }">
-          <el-tooltip class="item" :content="row.isonline" effect="dark" placement="top-start">
+          <el-tooltip class="item" effect="dark" placement="top-start">
             <el-tag :type="row.isonline | statusFilter">
               {{ row.isonline ? '在线' : '离线' }}
             </el-tag>
@@ -68,7 +68,7 @@
       @current-change="handleCurrentChange"
       @size-change="handleSizeChange"
     />
-    <table-edit ref="edit" />
+    <table-edit ref="edit" @fetch-data="fetchData" />
   </div>
 </template>
 
@@ -106,7 +106,7 @@
         queryForm: {
           pageNo: 1,
           pageSize: 20,
-          title: '',
+          userfeaturecode: '',
         },
         timeOutID: null,
       }

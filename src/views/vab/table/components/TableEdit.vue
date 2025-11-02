@@ -1,11 +1,11 @@
 <template>
   <el-dialog :title="title" :visible.sync="dialogFormVisible" width="500px" @close="close">
     <el-form ref="form" label-width="80px" :model="form" :rules="rules">
-      <el-form-item label="标题" prop="title">
-        <el-input v-model.trim="form.title" autocomplete="off" />
+      <el-form-item label="用户编号" prop="username">
+        <el-input v-model.trim="form.username" autocomplete="off" />
       </el-form-item>
-      <el-form-item label="作者" prop="author">
-        <el-input v-model.trim="form.author" autocomplete="off" />
+      <el-form-item label="数量" prop="userNumber">
+        <el-input v-model.trim="form.userNumber" autocomplete="off" />
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
@@ -16,19 +16,19 @@
 </template>
 
 <script>
-  import { doEdit } from '@/api/table'
+  import { addKeys } from '@/api/table'
 
   export default {
     name: 'TableEdit',
     data() {
       return {
         form: {
-          title: '',
-          author: '',
+          username: '',
+          userNumber: '',
         },
         rules: {
-          title: [{ required: true, trigger: 'blur', message: '请输入标题' }],
-          author: [{ required: true, trigger: 'blur', message: '请输入作者' }],
+          username: [{ required: true, trigger: 'blur', message: '请输入编号' }],
+          userNumber: [{ required: true, trigger: 'blur', message: '请输入数量' }],
         },
         title: '',
         dialogFormVisible: false,
@@ -54,15 +54,22 @@
       save() {
         this.$refs['form'].validate(async (valid) => {
           if (valid) {
-            const { msg } = await doEdit(this.form)
-            this.$baseMessage(msg, 'success')
-            this.$refs['form'].resetFields()
-            this.dialogFormVisible = false
-            this.$emit('fetch-data')
-            this.form = this.$options.data().form
+            const { data } = await addKeys(this.form)
+            if(data){
+              this.$baseMessage('添加成功', 'success')
+              this.$refs['form'].resetFields()
+              this.dialogFormVisible = false
+              this.form = this.$options.data().form
+              setTimeout(() => {
+                this.$emit('fetch-data')
+              }, 1000)
+            } else {
+              this.$baseMessage('添加失败', 'error')
+            }
           } else {
             return false
           }
+          
         })
       },
     },

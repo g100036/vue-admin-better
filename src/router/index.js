@@ -17,11 +17,6 @@ export const constantRoutes = [
     hidden: true,
   },
   {
-    path: '/register',
-    component: () => import('@/views/register/index'),
-    hidden: true,
-  },
-  {
     path: '/401',
     name: '401',
     component: () => import('@/views/401'),
@@ -78,7 +73,7 @@ export const asyncRoutes = [
     redirect: 'noRedirect',
     name: 'Vab',
     alwaysShow: true,
-    meta: { title: '卡密管理', icon: 'box-open' },
+    meta: { title: '卡密管理', icon: 'credit-card' },
     children: [
       // {
       //   path: 'permissions',
@@ -120,6 +115,17 @@ export const asyncRoutes = [
         meta: {
           title: '卡密列表',
           permissions: ['admin'],
+          icon: 'table',
+        },
+      },
+      {
+        path: 'buyCardsRecord',
+        component: () => import('@/views/vab/buyCardsRecord/index'),
+        name: 'BuyCardsRecord',
+        meta: {
+          title: '卡密购买记录',
+          permissions: ['admin'],
+          icon: 'table',
         },
       },
 
@@ -264,13 +270,13 @@ export const asyncRoutes = [
         path: 'userManagement',
         name: 'UserManagement',
         component: () => import('@/views/personnelManagement/userManagement/index'),
-        meta: { title: '用户管理', icon: 'users-cog' },
+        meta: { title: '用户列表', icon: 'user-edit' },
       },
       {
         path: 'upload',
         name: 'Upload',
         component: () => import('@/views/vab/upload/index'),
-        meta: { title: '上传视频', icon: 'users-cog', permissions: ['admin'] },
+        meta: { title: '上传视频', icon: 'video', permissions: ['admin'] },
       },
       // {
       //   path: 'roleManagement',
@@ -291,13 +297,25 @@ export const asyncRoutes = [
     component: Layout,
     redirect: 'noRedirect',
     name: 'UserPoint',
-    meta: { title: '积分管理', icon: 'users-cog', permissions: ['admin'] },
+    meta: { title: '积分管理', icon: 'coins', permissions: ['admin'] },
     children: [
       {
         path: 'userPoint',
         name: 'UserPoint',
         component: () => import('@/views/vab/userPoint/index'),
-        meta: { title: '积分管理', icon: 'users-cog' },
+        meta: { title: '用户积分列表', icon: 'users' },
+      },
+      {
+        path: 'userPointsRecord',
+        name: 'UserPointsRecord',
+        component: () => import('@/views/vab/userPointsRecord/index'),
+        meta: { title: '积分变动记录', icon: 'money-check' },
+      },
+      {
+        path: 'userGetPointRecord',
+        name: 'userGetPointRecord',
+        component: () => import('@/views/vab/userGetPointRecord/index'),
+        meta: { title: '积分提取记录', icon: 'clipboard' },
       },
     ]
   },
@@ -399,13 +417,29 @@ export const asyncRoutes = [
   },
 ]
 
+// // 添加根路径重定向到download.html
+// const rootRedirectRoute = {
+//   path: '/',
+//   exact: true, // 精确匹配根路径，确保只对/进行重定向
+//   beforeEnter: (to, from, next) => {
+//     // 使用window.location.href进行外部重定向到download.html
+//     next()
+//   }
+// };
+
+// 将根路径重定向路由添加到constantRoutes中
+// constantRoutes.unshift(rootRedirectRoute);
+
+// 合并常量路由和异步路由
+const allRoutes = [...constantRoutes, ...asyncRoutes];
+
 const router = new VueRouter({
   base: publicPath,
   mode: routerMode,
   scrollBehavior: () => ({
     y: 0,
   }),
-  routes: constantRoutes,
+  routes: allRoutes,
 })
 
 export function resetRouter() {

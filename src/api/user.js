@@ -7,6 +7,9 @@ export async function login(data) {
   return request({
     url: '/account/loginserver',
     method: 'post',
+    headers: {
+    'Content-Type': 'application/json;charset=UTF-8',
+   },
     data,
   })
 }

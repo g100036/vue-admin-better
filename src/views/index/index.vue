@@ -1,7 +1,16 @@
 <template>
   <div class="index-container">
     <el-row :gutter="20">
-      
+      <el-card>
+        <div>
+          <h3>当前公告：</h3>
+          <el-button type="primary" @click="showAddNotice">添加公告</el-button>
+        </div>
+        <div class="notice-item" v-for="item in notice" :key="item.id">
+          {{ item.announcement }}
+          <el-button type="danger" @click="deleteNotice(item.id)">点击删除</el-button>
+        </div>
+      </el-card>
       <el-col :lg="6" :md="12" :sm="24" :xl="6" :xs="24">
         <el-card shadow="never">
           <div slot="header">
@@ -144,18 +153,21 @@
       </el-col>
       
     </el-row>
+    <addNoticeVisible ref="addNoticeVisible" @submit="addNotice"></addNoticeVisible>
   </div>
 </template>
 
 <script>
   import VabChart from '@/plugins/echarts'
   import { dependencies, devDependencies } from '../../../package.json'
-  import { getNoticeList } from '@/api/notice'
+  import { getNoticeList, deleteNotice, addNotice } from '@/api/notice'
+  import AddNoticeVisible from '@/views/index/components/addNoticeVisible.vue'
 
   export default {
     name: 'Index',
     components: {
       VabChart,
+      AddNoticeVisible,
     },
     data() {
       return {
@@ -164,6 +176,7 @@
         nodeEnv: process.env.NODE_ENV,
         dependencies: dependencies,
         devDependencies: devDependencies,
+        notice: [],
         config1: {
           startVal: 0,
           endVal: this.$baseLodash.random(20000, 60000),
@@ -601,7 +614,8 @@
       }
     },
     created() {
-      this.fetchData()
+      // this.fetchData()
+      this.getNotice()
     },
     beforeDestroy() {
       clearInterval(this.timer)
@@ -679,6 +693,27 @@
         // 将十六进制颜色转换为RGB值
         const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
         return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : null
+      },
+      async getNotice() {
+        const res = await getNoticeList()
+        this.notice = res.data
+      },
+      async deleteNotice(id) {
+        const res = await deleteNotice({
+          id: id,
+        })
+        this.$baseMessage(res.msg, 'success')
+        this.getNotice()
+      },
+      showAddNotice() {
+        this.$refs.addNoticeVisible.show()
+      },
+      async addNotice(ment) {
+        const res = await addNotice({
+          ment
+        })
+        this.$baseMessage(res.msg, 'success')
+        this.getNotice()
       },
     },
   }
@@ -1338,7 +1373,13 @@
       }
     }
   }
-
+  .notice-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+  }
   // 动画
   @keyframes pulse {
     0%,

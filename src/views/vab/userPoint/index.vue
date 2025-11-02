@@ -3,31 +3,37 @@
     <!-- <vab-page-header description="系统用户管理，支持添加、编辑、删除用户信息" :icon="['fas', 'users']" title="用户管理" /> -->
 
     <vab-query-form>
-      <vab-query-form-left-panel :span="12">
+      <!-- <vab-query-form-left-panel :span="12">
         <el-button icon="el-icon-plus" type="primary" @click="handleEdit">添加</el-button>
-        <el-button icon="el-icon-delete" type="danger" @click="handleDelete">批量删除</el-button>
-      </vab-query-form-left-panel>
-      <vab-query-form-right-panel :span="12">
+        <el-button icon="el-icon-delete" type="danger" @click="handlePoint">批量删除</el-button>
+      </vab-query-form-left-panel> -->
+      <vab-query-form-left-panel :span="12">
         <el-form :inline="true" :model="queryForm" @submit.native.prevent>
           <el-form-item>
-            <el-input v-model.trim="queryForm.username" clearable placeholder="请输入用户名" />
+            <el-input v-model.trim="queryForm.username" clearable placeholder="请输入用户编号" />
           </el-form-item>
           <el-form-item>
             <el-button icon="el-icon-search" type="primary" @click="queryData">查询</el-button>
           </el-form-item>
         </el-form>
-      </vab-query-form-right-panel>
+      </vab-query-form-left-panel>
     </vab-query-form>
 
     <el-table v-loading="listLoading" :data="list" :element-loading-text="elementLoadingText" @selection-change="setSelectRows">
       <el-table-column show-overflow-tooltip type="selection" />
-      <el-table-column label="用户ID" prop="userid" show-overflow-tooltip />
-      <el-table-column label="用户编号" prop="userName" show-overflow-tooltip />
-      <el-table-column label="在线状态" prop="isEnable" show-overflow-tooltip />
-      <el-table-column label="下级数量" prop="userNumber" show-overflow-tooltip />
-      <el-table-column label="备注数字" prop="userbakckupnumber" show-overflow-tooltip />
-      <el-table-column label="特征码" prop="userfeaturecode" show-overflow-tooltip />
-      <el-table-column label="创建时间" prop="createTime" show-overflow-tooltip />
+      <el-table-column label="用户ID" prop="userName" show-overflow-tooltip />
+      <el-table-column label="提取积分状态" prop="isExtract" show-overflow-tooltip >
+        <template #default="{ row }">
+          <el-tag v-if="row.isExtract" type="success">已提取</el-tag>
+          <el-tag v-else type="danger">未提取</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column label="有效积分数" prop="userpoints" show-overflow-tooltip >
+        <template #default="{ row }">
+          {{ Math.round(row.userpoints / 90 * 100) / 100 }}
+        </template>
+      </el-table-column>
+      <el-table-column label="上次积分入账时间" prop="userPointsDate" show-overflow-tooltip />
 
       <!-- <el-table-column label="权限" show-overflow-tooltip>
         <template #default="{ row }">
@@ -38,16 +44,16 @@
       </el-table-column> -->
 
       <!-- <el-table-column label="修改时间" prop="datatime" show-overflow-tooltip /> -->
-      <!-- <el-table-column label="操作" show-overflow-tooltip width="200">
+      <el-table-column label="操作" show-overflow-tooltip width="200">
         <template #default="{ row }">
-          <el-button type="text" @click="handleEdit(row)">编辑</el-button>
-          <el-button type="text" @click="handleDelete(row)">删除</el-button>
+          <el-button type="text" @click="handleEdit(row)">提取积分</el-button>
+          <el-button type="text" @click="handlePoint(row)">加积分</el-button>
         </template>
-      </el-table-column> -->
+      </el-table-column>
     </el-table>
     <el-pagination
       background
-      :current-page="queryForm.pageNo"
+      :current-page="queryForm.pageNumber"
       :layout="layout"
       :page-size="queryForm.pageSize"
       :total="total"
@@ -55,19 +61,22 @@
       @size-change="handleSizeChange"
     />
     <edit ref="edit" @fetch-data="fetchData" />
+    <addPoint ref="addPoint" @fetch-data="fetchData" />
   </div>
 </template>
 
 <script>
-  import { doDelete, getUserPointTotal } from '@/api/userManagement'
+  import { getUserPointTotal, getUserPointsRecordByUserName } from '@/api/userManagement'
   import Edit from './components/UserManagementEdit'
   import VabPageHeader from '@/components/VabPageHeader'
+  import AddPoint from './components/addPoint'
 
   export default {
     name: 'UserManagement',
     components: {
       Edit,
       VabPageHeader,
+      AddPoint,
     },
     data() {
       return {
@@ -78,7 +87,7 @@
         selectRows: '',
         elementLoadingText: '正在加载...',
         queryForm: {
-          pageNo: 1,
+          pageNumber: 1,
           pageSize: 10,
           username: '',
         },
@@ -97,31 +106,17 @@
         this.selectRows = val
       },
       handleEdit(row) {
-        if (row.id) {
+        if (row.userName) {
           this.$refs['edit'].showEdit(row)
         } else {
           this.$refs['edit'].showEdit()
         }
       },
-      handleDelete(row) {
-        if (row.id) {
-          this.$baseConfirm('你确定要删除当前项吗', null, async () => {
-            const { msg } = await doDelete({ ids: row.id })
-            this.$baseMessage(msg, 'success')
-            this.fetchData()
-          })
+      handlePoint(row) {
+        if (row.userName) {
+          this.$refs['addPoint'].showAddPoint(row)
         } else {
-          if (this.selectRows.length > 0) {
-            const ids = this.selectRows.map((item) => item.id).join()
-            this.$baseConfirm('你确定要删除选中项吗', null, async () => {
-              const { msg } = await doDelete({ ids })
-              this.$baseMessage(msg, 'success')
-              this.fetchData()
-            })
-          } else {
-            this.$baseMessage('未选中任何行', 'error')
-            return false
-          }
+          this.$refs['addPoint'].showAddPoint()
         }
       },
       handleSizeChange(val) {
@@ -134,11 +129,20 @@
       },
       queryData() {
         this.queryForm.pageNo = 1
-        this.fetchData()
+        this.fetchDataByUserName()
       },
       async fetchData() {
         this.listLoading = true
         const { data } = await getUserPointTotal()
+        this.list = data
+        this.total = data.length
+        this.timeOutID = setTimeout(() => {
+          this.listLoading = false
+        }, 300)
+      },
+      async fetchDataByUserName() {
+        this.listLoading = true
+        const { data } = await getUserPointsRecordByUserName({ userName: this.queryForm.username })
         this.list = data
         this.total = data.length
         this.timeOutID = setTimeout(() => {

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APP下载</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+            font-family: Arial, sans-serif;
+        }
+        .download-container {
+            text-align: center;
+            padding: 40px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .download-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background-color: #409EFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+        .download-button:hover {
+            background-color: #66b1ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="download-container">
+        <h3>AuxiliaryElvesSetup.exe</h3>
+        <a href="#" class="download-button" id="app-download-link">点击下载安装包</a>
+    </div>
+    <script>
+        // 您可以根据实际情况修改下载链接
+        document.getElementById('app-download-link').href = '/static/download/AuxiliaryElvesSetup.exe';
+    </script>
+</body>
+</html>

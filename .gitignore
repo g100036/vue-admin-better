@@ -2,6 +2,7 @@
 .DS_Store
 node_modules
 dist
+back
 .env.local
 .env.*.local
 npm-debug.log*

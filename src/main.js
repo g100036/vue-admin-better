@@ -12,7 +12,7 @@ import { printLayoutsInfo } from '@/utils/printInfo'
  */
 
 // 检测环境变量或默认使用mock
-const useMock = process.env.VUE_APP_MOCK_ENABLE === 'true' || process.env.NODE_ENV === 'production'
+const useMock = process.env.VUE_APP_MOCK_ENABLE === 'true'
 if (useMock) {
   // 使用动态import替代require
   import('@/utils/static').then(({ mockXHR }) => {
@@ -30,6 +30,7 @@ if (useMock) {
   })
 } else {
   // 未启用Mock时直接打印layouts/index.js中的信息到控制台
+  console.log('未启用Mock拦截')
   Vue.config.productionTip = false
   new Vue({
     el: '#vue-admin-better',

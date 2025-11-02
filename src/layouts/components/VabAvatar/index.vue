@@ -86,8 +86,7 @@
       handleCommand(command) {
         switch (command) {
           case 'logout':
-            // this.logout()
-            localStorage.clear()
+            this.logout()
             // this.$router.push('/login')
             break
           case 'personalCenter':
@@ -123,14 +122,9 @@
         this.$message.info('系统设置功能开发中...')
       },
       logout() {
-        this.$baseConfirm('您确定要退出' + this.$baseTitle + '吗?', null, async () => {
-          await this.$store.dispatch('user/logout')
-          if (recordRoute) {
-            const fullPath = this.$route.fullPath
-            this.$router.push(`/login?redirect=${fullPath}`)
-          } else {
-            this.$router.push('/login')
-          }
+        this.$baseConfirm('您确定要退出' + this.$baseTitle + '吗?', null, () => {
+          localStorage.clear()
+          location.reload()
         })
       },
     },

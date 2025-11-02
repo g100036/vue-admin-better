@@ -14,6 +14,7 @@ donationConsole()
 
 const configPath = path.resolve(__dirname, 'rspack.config.js')
 const config = require(configPath)
+console.log('当前环境:', process.argv[2])
 const mode = process.argv[2] === 'build' ? 'production' : 'development'
 
 // 增加archiver依赖用于创建压缩包

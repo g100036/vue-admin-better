@@ -4,16 +4,22 @@
 
     <vab-query-form>
       <vab-query-form-left-panel :span="12">
-        <el-button icon="el-icon-plus" type="primary" @click="handleEdit">添加</el-button>
-        <el-button icon="el-icon-delete" type="danger" @click="handleDelete">批量删除</el-button>
+        <el-form :inline="true" :model="queryUserForm" @submit.native.prevent>
+          <el-form-item>
+            <el-input v-model.trim="queryUserForm.userfeaturecode" clearable placeholder="请输入用户ID" />
+          </el-form-item>
+          <el-form-item>
+            <el-button icon="el-icon-search" type="primary" @click="queryUserData">查询用户</el-button>
+          </el-form-item>
+        </el-form>
       </vab-query-form-left-panel>
       <vab-query-form-right-panel :span="12">
         <el-form :inline="true" :model="queryForm" @submit.native.prevent>
           <el-form-item>
-            <el-input v-model.trim="queryForm.username" clearable placeholder="请输入用户名" />
+            <el-input v-model.trim="queryForm.username" clearable placeholder="请输入用户编号" />
           </el-form-item>
           <el-form-item>
-            <el-button icon="el-icon-search" type="primary" @click="queryData">查询</el-button>
+            <el-button icon="el-icon-search" type="primary" @click="queryData">查询下级用户</el-button>
           </el-form-item>
         </el-form>
       </vab-query-form-right-panel>
@@ -21,22 +27,21 @@
 
     <el-table v-loading="listLoading" :data="list" :element-loading-text="elementLoadingText" @selection-change="setSelectRows">
       <el-table-column show-overflow-tooltip type="selection" />
-      <el-table-column label="用户ID" prop="userid" show-overflow-tooltip />
-      <el-table-column label="用户编号" prop="userName" show-overflow-tooltip />
+      <el-table-column label="用户ID" prop="userfeaturecode" show-overflow-tooltip />
       <el-table-column label="在线状态" show-overflow-tooltip>
         <template #default="{ row }">
-          <el-tooltip class="item" :content="row.isEnable" effect="dark" placement="top-start">
+          <el-tooltip class="item" effect="dark" placement="top-start">
             <el-tag :type="row.isEnable | statusFilter">
               {{ row.isEnable ? '在线' : '离线' }}
             </el-tag>
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column label="下级数量" prop="userNumber" show-overflow-tooltip />
+      <el-table-column label="卡密数量" prop="userNumber" show-overflow-tooltip />
       <el-table-column label="备注数字" prop="userbakckupnumber" show-overflow-tooltip />
-      <el-table-column label="特征码" prop="userfeaturecode" show-overflow-tooltip />
+      <!-- <el-table-column label="特征码" prop="userfeaturecode" show-overflow-tooltip /> -->
       <el-table-column label="创建时间" prop="createTime" show-overflow-tooltip />
-
+      <el-table-column label="用户编号" prop="userName" show-overflow-tooltip />
       <!-- <el-table-column label="权限" show-overflow-tooltip>
         <template #default="{ row }">
           <el-tag v-for="(item, index) in row.permissions" :key="index">
@@ -67,7 +72,7 @@
 </template>
 
 <script>
-  import { doDelete, getList } from '@/api/userManagement'
+  import { doDelete, getList, getInviteUserList } from '@/api/userManagement'
   import Edit from './components/UserManagementEdit'
   import VabPageHeader from '@/components/VabPageHeader'
 
@@ -97,7 +102,10 @@
         queryForm: {
           pageNo: 1,
           pageSize: 10,
-          username: '',
+          userfeaturecode: '',
+        },
+        queryUserForm: {
+          userfeaturecode: '',
         },
         timeOutID: null,
       }
@@ -151,11 +159,36 @@
       },
       queryData() {
         this.queryForm.pageNo = 1
-        this.fetchData()
+        this.getInviteUserList()
+      },
+      // 查询用户
+      queryUserData() {
+        this.queryForm.pageNo = 1
+        this.fetchUserData()
       },
       async fetchData() {
         this.listLoading = true
         const { data } = await getList()
+        this.list = data
+        this.total = data.length
+        this.timeOutID = setTimeout(() => {
+          this.listLoading = false
+        }, 300)
+      },
+      // 查询所有下级用户
+      async getInviteUserList() {
+        this.listLoading = true
+        const { data } = await getInviteUserList({ username: this.queryForm.username })
+        this.list = data
+        this.total = data.length
+        this.timeOutID = setTimeout(() => {
+          this.listLoading = false
+        }, 300)
+      },
+      // 查询用户
+      async fetchUserData() {
+        this.listLoading = true
+        const { data } = await getList({ userFeatureCode: this.queryUserForm.userfeaturecode })
         this.list = data
         this.total = data.length
         this.timeOutID = setTimeout(() => {

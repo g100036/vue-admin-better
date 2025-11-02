@@ -64,7 +64,7 @@
               </div>
 
               <div class="card-footer">
-                <a class="action-button" href="https://github.com/zxwk1998/vue-admin-better" target="_blank">
+                <a class="action-button" href="www.baidu.com" target="_blank">
                   <vab-icon :icon="['fab', 'github']" />
                   <span>查看源码</span>
                 </a>

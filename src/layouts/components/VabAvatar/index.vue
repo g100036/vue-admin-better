@@ -30,7 +30,7 @@
 
       <!-- <el-divider></el-divider> -->
 
-      <el-dropdown-item command="github" class="dropdown-item">
+      <!-- <el-dropdown-item command="github" class="dropdown-item">
         <i class="el-icon-link"></i>
         <span>GitHub 地址</span>
       </el-dropdown-item>
@@ -58,7 +58,7 @@
       <el-dropdown-item command="job" class="dropdown-item">
         <i class="el-icon-link"></i>
         <span>好工作就业参考网</span>
-      </el-dropdown-item>
+      </el-dropdown-item> -->
 
       <el-divider></el-divider>
 
@@ -86,7 +86,9 @@
       handleCommand(command) {
         switch (command) {
           case 'logout':
-            this.logout()
+            // this.logout()
+            localStorage.clear()
+            // this.$router.push('/login')
             break
           case 'personalCenter':
             this.personalCenter()
@@ -95,7 +97,7 @@
             this.settings()
             break
           case 'github':
-            window.open('https://github.com/zxwk1998/vue-admin-better')
+            window.open('www.baidu.com')
             break
           case 'gitee':
             window.open('https://gitee.com/chu1204505056/vue-admin-better')

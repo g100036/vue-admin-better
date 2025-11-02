@@ -241,7 +241,7 @@
           },
         ],
         settingForm: {
-          name: 'Vue Admin Better',
+          name: '卡密管理系统',
           description: '一个优秀的后台管理系统',
           comment: true,
           maintenance: false,

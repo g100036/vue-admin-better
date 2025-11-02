@@ -7,7 +7,7 @@ import '@/layouts/export'
 import { printLayoutsInfo } from '@/utils/printInfo'
 
 /**
- * @author https://github.com/zxwk1998/vue-admin-better （不想保留author可删除）
+ * @author www.baidu.com （不想保留author可删除）
  * @description 生产环境默认都使用mock，如果正式用于生产环境时，记得去掉
  */
 
@@ -30,7 +30,6 @@ if (useMock) {
   })
 } else {
   // 未启用Mock时直接打印layouts/index.js中的信息到控制台
-  printLayoutsInfo()
   Vue.config.productionTip = false
   new Vue({
     el: '#vue-admin-better',

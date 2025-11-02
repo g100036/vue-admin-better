@@ -86,10 +86,10 @@
               <span v-else>登录中...</span>
             </el-button>
 
-            <div class="register-link">
+            <!-- <div class="register-link">
               <span>还没有账户？</span>
               <router-link class="link" to="/register">立即注册</router-link>
-            </div>
+            </div> -->
           </el-form>
         </div>
       </div>
@@ -99,7 +99,6 @@
 
 <script>
   import { isPassword } from '@/utils/validate'
-
   export default {
     name: 'Login',
     directives: {
@@ -171,7 +170,7 @@
     },
     mounted() {
       this.form.username = 'admin'
-      this.form.password = '123456'
+      this.form.password = ''
       this.timeOutID = setTimeout(() => {
         this.handleLogin()
       }, 8000)

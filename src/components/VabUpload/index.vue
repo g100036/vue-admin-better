@@ -9,7 +9,7 @@
       <br />
       <el-upload
         ref="upload"
-        accept="image/png, image/jpeg"
+        accept="image/png, image/jpeg, video/mp4"
         :action="action"
         :auto-upload="false"
         class="upload-content"
@@ -78,7 +78,7 @@
         loading: false,
         dialogVisible: false,
         dialogImageUrl: '',
-        action: 'https://vab-unicloud-3a9da9.service.tcloudbase.com/upload',
+        action: 'http://47.238.158.162/v1/auxiliary/video/videoupload',
         headers: {},
         fileList: [],
         picture: 'picture',

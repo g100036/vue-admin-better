@@ -1,13 +1,11 @@
 import request from '@/utils/request'
 import { encryptedData } from '@/utils/encrypt'
 import { loginRSA, tokenName } from '@/config'
-
+import Md5 from 'md5'
 export async function login(data) {
-  if (loginRSA) {
-    data = await encryptedData(data)
-  }
+  data.password = Md5(data.password)
   return request({
-    url: '/login',
+    url: '/account/loginserver',
     method: 'post',
     data,
   })

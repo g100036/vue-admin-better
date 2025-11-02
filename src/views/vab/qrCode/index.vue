@@ -217,7 +217,7 @@
     data() {
       return {
         activeTab: 'generate',
-        qrContent: 'https://github.com/zxwk1998/vue-admin-better',
+        qrContent: 'www.baidu.com',
         qrSize: 200,
         qrFgColor: '#000000',
         qrBgColor: '#ffffff',
@@ -268,7 +268,7 @@
       },
 
       handleFileUpload(file) {
-        this.scanResult = '这是示例识别结果：https://github.com/zxwk1998/vue-admin-better'
+        this.scanResult = '这是示例识别结果：www.baidu.com'
         this.$message.success('图片识别成功')
       },
 

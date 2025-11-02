@@ -1,5 +1,5 @@
 /**
- * @author https://github.com/zxwk1998/vue-admin-better （不想保留author可删除）
+ * @author www.baidu.com （不想保留author可删除）
  * @description 登录、获取用户信息、退出登录、清除accessToken逻辑，不建议修改
  */
 
@@ -41,10 +41,12 @@ const actions = {
     commit('setPermissions', permissions)
   },
   async login({ commit }, userInfo) {
-    const { data } = await login(userInfo)
-    const accessToken = data[tokenName]
+    const {data} = await login(userInfo)
+    // const accessToken = data[tokenName]
+     const accessToken = data
+    console.log(accessToken);
     if (accessToken) {
-      commit('setAccessToken', accessToken)
+      commit('setAccessToken', 'Bearer ' + accessToken)
       const hour = new Date().getHours()
       const thisTime = hour < 8 ? '早上好' : hour <= 11 ? '上午好' : hour <= 13 ? '中午好' : hour < 18 ? '下午好' : '晚上好'
       Vue.prototype.$baseNotify(`欢迎登录${title}`, `${thisTime}！`)
@@ -53,8 +55,12 @@ const actions = {
     }
   },
   async getUserInfo({ commit, state }) {
-    const { data } = await getUserInfo(state.accessToken)
-    if (!data) {
+    const data = {
+      permissions: ['admin'],
+      username: 'admin',
+      avatar: 'https://gcore.jsdelivr.net/gh/zxwk1998/image/avatar/avatar_1.png',
+    }
+    if (!state.accessToken) {
       Vue.prototype.$baseMessage('验证失败，请重新登录...', 'error')
       return false
     }

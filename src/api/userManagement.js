@@ -1,8 +1,17 @@
 import request from '@/utils/request'
 
+// 获取用户列表
 export function getList(data) {
   return request({
-    url: '/userManagement/getList',
+    url: '/account/queryuser',
+    method: 'post',
+    data,
+  })
+}
+// 获取总积分列表
+export function getUserPointTotal(data) {
+  return request({
+    url: '/points/queryuserpoints',
     method: 'post',
     data,
   })

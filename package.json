@@ -5,7 +5,7 @@
   "participants": [],
   "homepage": "https://vuejs-core.cn",
   "scripts": {
-    "serve:rspack": "node --no-deprecation rspack.js serve",
+    "dev": "node --no-deprecation rspack.js serve",
     "build": "node --no-deprecation rspack.js build",
     "print-info": "node -e \"require('./layouts').donationConsole()\"",
     "lint": "eslint {src,mock,library}/**/*.{vue,js} --fix",
@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zxwk1998/vue-admin-better.git"
+    "url": "git+www.baidu.com.git"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
@@ -39,6 +39,7 @@
     "layouts": "file:layouts",
     "lodash": "^4.17.21",
     "marked": "^16.3.0",
+    "md5": "^2.3.0",
     "mockjs": "^1.1.0",
     "nprogress": "^0.2.0",
     "qrcode": "^1.5.4",

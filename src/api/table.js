@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getList(data) {
   return request({
-    url: '/table/getList',
+    url: '/account/queryuserkey',
     method: 'post',
     data,
   })

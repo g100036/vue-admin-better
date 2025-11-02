@@ -13,15 +13,16 @@ const setting = {
   // 进行编译的依赖
   transpileDependencies: [],
   //标题 （包括初次加载雪花屏的标题 页面的标题 浏览器的标题）
-  title: 'Admin Better',
+  title: '卡密管理系统',
   //简写
   abbreviation: 'vab',
   //开发环境端口号
   devPort: '8090',
   //copyright
-  copyright: 'zxwk1998',
+  // copyright: 'zxwk1998',
+  copyright: '',
   //是否显示页面底部自定义版权信息
-  footerCopyright: true,
+  footerCopyright: false,
   //是否显示顶部进度条
   progressBar: true,
   //缓存路由的最大数量
@@ -33,15 +34,15 @@ const setting = {
   //加载时显示文字
   loadingText: '正在加载中...',
   //token名称
-  tokenName: 'accessToken',
+  tokenName: 'Authorization',
   //token在localStorage、sessionStorage存储的key的名称
-  tokenTableName: 'vue-admin-better-2024',
+  tokenTableName: 'bettert_k',
   //token存储位置localStorage sessionStorage
   storage: 'localStorage',
   //token失效回退到登录页时是否记录本次的路由
   recordRoute: true,
   //是否显示logo，不显示时设置false，显示时请填写remixIcon图标名称，暂时只支持设置remixIcon
-  logo: 'vuejs-fill',
+  logo: false,
   //是否显示在页面高亮错误
   errorLog: ['development'],
   //是否开启登录拦截
@@ -61,6 +62,6 @@ const setting = {
   //代码生成机生成在view下的文件夹名称
   templateFolder: 'project',
   //是否显示终端donation打印
-  donation: true,
+  donation: false,
 }
 module.exports = setting

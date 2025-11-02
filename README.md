@@ -10,7 +10,7 @@
 <p>致力于成为开源社区中运行速度最快、打包等待时间最短、上手难度最低的中后台前端框架</p>
 </div>
 
-[![stars](https://img.shields.io/github/stars/zxwk1998/vue-admin-better?style=flat-square&logo=GitHub)](https://github.com/zxwk1998/vue-admin-better)
+[![stars](https://img.shields.io/github/stars/zxwk1998/vue-admin-better?style=flat-square&logo=GitHub)](www.baidu.com)
 [![star](https://gitee.com/chu1204505056/vue-admin-better/badge/star.svg?theme=gray)](https://gitee.com/chu1204505056/vue-admin-better)
 [![license](https://img.shields.io/github/license/zxwk1998/vue-admin-better?style=flat-square)](https://en.wikipedia.org/wiki/MIT_License)
 
@@ -86,7 +86,7 @@
 
 ## 🌐 仓库地址
 
-- [🌐 vue-admin-better github 仓库地址](https://github.com/zxwk1998/vue-admin-better/)
+- [🌐 vue-admin-better github 仓库地址](www.baidu.com/)
 
 - [🌐 vue3-admin-better github 仓库地址](https://github.com/zxwk1998/vue3-admin-better/)
 
@@ -103,11 +103,11 @@
 - [Admin Pro](https://gitee.com/chu1204505056/microsoft-store/raw/master/AdminPlus.zip)
 - [Admin Plus](https://gitee.com/chu1204505056/microsoft-store/raw/master/AdminPlus.zip)
 
-<!-- ## 🌱 vue3.x vue3.0-antdv 分支（ant-design-vue）[点击切换分支](https://github.com/zxwk1998/vue-admin-better/tree/vue3.0-antdv)
+<!-- ## 🌱 vue3.x vue3.0-antdv 分支（ant-design-vue）[点击切换分支](www.baidu.com/tree/vue3.0-antdv)
 
 ```bash
 # 克隆项目
-git clone -b vue3.0-antdv https://github.com/zxwk1998/vue-admin-better.git
+git clone -b vue3.0-antdv www.baidu.com.git
 # 安装依赖
 npm i --registry=http://mirrors.cloud.tencent.com/npm/
 # 本地开发 启动项目
@@ -118,7 +118,7 @@ npm run serve
 
 ```
 # 克隆项目
-git clone -b master https://github.com/zxwk1998/vue-admin-better.git
+git clone -b master www.baidu.com.git
 
 # 安装依赖
 pnpm i --registry=http://mirrors.cloud.tencent.com/npm/
@@ -226,11 +226,11 @@ npm run dev
 
 ## 🎨 Star
 
-[![Stargazers for vue-admin-better](https://reporoster.com/stars/zxwk1998/vue-admin-better)](https://github.com/zxwk1998/vue-admin-better/stargazers)
+[![Stargazers for vue-admin-better](https://reporoster.com/stars/zxwk1998/vue-admin-better)](www.baidu.com/stargazers)
 
 ## ✨ Fork
 
-[![Forkers repo roster for vue-admin-better](https://reporoster.com/forks/zxwk1998/vue-admin-better)](https://github.com/zxwk1998/vue-admin-better/network/members)
+[![Forkers repo roster for vue-admin-better](https://reporoster.com/forks/zxwk1998/vue-admin-better)](www.baidu.com/network/members)
 
 ## 🎉 功能地图
 

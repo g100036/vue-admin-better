@@ -2,7 +2,7 @@
   <a
     aria-label="View source on Github"
     class="github-corner"
-    href="https://github.com/zxwk1998/vue-admin-better"
+    href="www.baidu.com"
     target="_blank"
   >
     <svg

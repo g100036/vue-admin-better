@@ -23,15 +23,7 @@
       <el-table-column show-overflow-tooltip type="selection" />
       <el-table-column label="用户ID" prop="userid" show-overflow-tooltip />
       <el-table-column label="用户编号" prop="userName" show-overflow-tooltip />
-      <el-table-column label="在线状态" show-overflow-tooltip>
-        <template #default="{ row }">
-          <el-tooltip class="item" :content="row.isEnable" effect="dark" placement="top-start">
-            <el-tag :type="row.isEnable | statusFilter">
-              {{ row.isEnable ? '在线' : '离线' }}
-            </el-tag>
-          </el-tooltip>
-        </template>
-      </el-table-column>
+      <el-table-column label="在线状态" prop="isEnable" show-overflow-tooltip />
       <el-table-column label="下级数量" prop="userNumber" show-overflow-tooltip />
       <el-table-column label="备注数字" prop="userbakckupnumber" show-overflow-tooltip />
       <el-table-column label="特征码" prop="userfeaturecode" show-overflow-tooltip />
@@ -67,7 +59,7 @@
 </template>
 
 <script>
-  import { doDelete, getList } from '@/api/userManagement'
+  import { doDelete, getUserPointTotal } from '@/api/userManagement'
   import Edit from './components/UserManagementEdit'
   import VabPageHeader from '@/components/VabPageHeader'
 
@@ -76,15 +68,6 @@
     components: {
       Edit,
       VabPageHeader,
-    },
-    filters:{
-      statusFilter(status) {
-        const statusMap = {
-          true: 'success',
-          false: 'danger',
-        }
-        return statusMap[status]
-      },
     },
     data() {
       return {
@@ -155,7 +138,7 @@
       },
       async fetchData() {
         this.listLoading = true
-        const { data } = await getList()
+        const { data } = await getUserPointTotal()
         this.list = data
         this.total = data.length
         this.timeOutID = setTimeout(() => {

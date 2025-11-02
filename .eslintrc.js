@@ -1,5 +1,5 @@
 /**
- * @author https://github.com/zxwk1998/vue-admin-better （不想保留author可删除）
+ * @author www.baidu.com （不想保留author可删除）
  * @description .eslintrc.js
  */
 
